@@ -1,6 +1,7 @@
 import { IoSettingsOutline } from 'react-icons/io5'
-import { FiCheck } from 'react-icons/fi'
+import { FiCheck, FiTrash } from 'react-icons/fi'
 import { HiXMark } from 'react-icons/hi2'
+import { ImSpinner2 } from 'react-icons/im'
 
 import type { IconType } from 'react-icons'
 
@@ -11,6 +12,8 @@ export type ValidIcon = keyof typeof Icons
 export const Icons = {
     checkMark: FiCheck,
     xMark: HiXMark,
-    settings: IoSettingsOutline
+    settings: IoSettingsOutline,
+    spinner: ImSpinner2,
+    trash: FiTrash,
 } as const
 

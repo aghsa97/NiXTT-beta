@@ -16,8 +16,8 @@ model Task {
   title       String
   done        Boolean  @default(false)
   ownerId     String   
-  date        DateTime?
-  dueString   String?
+  date        DateTime
+  dueString   String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

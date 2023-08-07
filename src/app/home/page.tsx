@@ -1,11 +1,19 @@
 import { redirect } from "next/navigation"
 
-import CreateTaskBtn from '@/components/ui/create-task-btn'
+import CompleteBtn from "@/components/ui/complete-task-btn"
+import { TaskForm } from "@/components/create-task-form"
+import { DAYS } from "@/lib/constants"
+import { auth } from '@clerk/nextjs'
 import { db } from '@/lib/db'
 
-import { auth } from '@clerk/nextjs'
-import { days } from "@/lib/constants"
-import CompleteBtn from "@/components/ui/complete-task-btn"
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+
 
 
 async function getTasks() {
@@ -34,8 +42,8 @@ async function getTasks() {
 }
 
 async function HomePage() {
-    const data = await getTasks()
 
+    const data = await getTasks()
     const completedTasks = data.filter(todo => todo.done)
     const toDoTasks = data.filter(todo => !todo.done)
 
@@ -46,7 +54,17 @@ async function HomePage() {
                     <h1 className=" text-3xl font-medium text-neutral-950">
                         Start your day by creating a new task <span className="text-neutral-950">🚀</span>
                     </h1>
-                    <CreateTaskBtn />
+                    <Dialog>
+                        <DialogTrigger className="px-6 py-3 rounded-full bg-main hover:bg-main/60 transition-main">+ Create Task</DialogTrigger>
+                        <DialogContent className="text-neutral-950">
+                            <DialogHeader>
+                                <DialogTitle>
+                                    Create your task
+                                </DialogTitle>
+                            </DialogHeader>
+                            <TaskForm />
+                        </DialogContent>
+                    </Dialog>
                 </div>
             </div>
         )
@@ -59,12 +77,22 @@ async function HomePage() {
                     <div className="flex items-center gap-2">
                         <h1 className='text-5xl font-light'>{new Date().getDate()}</h1>
                         <div className="flex flex-col items-start justify-center">
-                            <p className='text-neutral-950'>{days[new Date().getDay()]}</p>
+                            <p className='text-neutral-950'>{DAYS[new Date().getDay()]}</p>
                             <p className='text-neutral-950/40'>{new Date().toLocaleString('en-US', { month: 'long' })} {new Date().getFullYear()}</p>
                         </div>
                     </div>
                     <div className="flex items-center justify-between gap-2">
-                        <CreateTaskBtn className='px-6 py-3 rounded-full ' />
+                        <Dialog>
+                            <DialogTrigger className="px-6 py-3 rounded-full bg-main hover:bg-main/60 transition-main">+ Create Task</DialogTrigger>
+                            <DialogContent className="text-neutral-950">
+                                <DialogHeader>
+                                    <DialogTitle>
+                                        Create your task
+                                    </DialogTitle>
+                                </DialogHeader>
+                                <TaskForm />
+                            </DialogContent>
+                        </Dialog>
                     </div>
                 </header>
                 <div className="flex flex-col gap-5 mt-10 overflow-y-scroll">
